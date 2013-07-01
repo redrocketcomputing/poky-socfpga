@@ -100,7 +100,8 @@ VMLINUX_NAME ?= "vmlinux-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
 kernel_do_deploy_append() {
 	install -m 0644 ${S}/vmlinux ${DEPLOYDIR}/${VMLINUX_NAME}
-	rm -f vmlinux
-	ln -sf ${VMLINUX_NAME} vmlinux
+	cd ${DEPLOYDIR} &&
+		rm -f vmlinux &&
+		ln -sf ${VMLINUX_NAME} vmlinux
 }
 
