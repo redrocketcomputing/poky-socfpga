@@ -71,7 +71,7 @@ do_compile_dtb() {
 
 addtask compile_dtb after do_compile before do_build
 
-KERNEL_DEVICETREE = "socfpga"
+KERNEL_DEVICETREE = "socfpga_vt socfpga_cyclone5"
 
 do_deploy_dtb() {
     install -d ${DEPLOY_DIR_IMAGE}
