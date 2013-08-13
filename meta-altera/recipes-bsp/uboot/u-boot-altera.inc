@@ -1,4 +1,4 @@
-DESCRIPTION = "U-boot bootloader for Altera socfpga_cyclone5"
+DESCRIPTION = "U-boot bootloader for Altera socfpga"
 HOMEPAGE = "http://www.altera.com/"
 SECTION = "bootloaders"
 PROVIDES += " virtual/bootloader u-boot"
