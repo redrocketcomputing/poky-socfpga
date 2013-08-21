@@ -19,21 +19,6 @@ SRC_URI += "file://server/Makefile "
 SRC_URI += "file://Makefile "
 SRC_URI += "file://hello/hello.c "
 SRC_URI += "file://hello/Makefile "
-SRC_URI += "file://web/AC_RunActiveContent.js "
-SRC_URI += "file://web/altera-logo.gif "
-SRC_URI += "file://web/blinkled.gif "
-SRC_URI += "file://web/board-flash.jpg "
-SRC_URI += "file://web/not_found.html "
-SRC_URI += "file://web/board-flash.swf "
-SRC_URI += "file://web/board.jpg "
-SRC_URI += "file://web/favicon.ico "
-SRC_URI += "file://web/helper_script.js "
-SRC_URI += "file://web/offled.jpg "
-SRC_URI += "file://web/onled.jpg "
-SRC_URI += "file://web/progress.js "
-SRC_URI += "file://web/runningled.gif "
-SRC_URI += "file://web/style.css "
-SRC_URI += "file://cgi-bin/index.sh "
 SRC_URI += "file://doc/README "
 
 S = "${WORKDIR}"
@@ -49,7 +34,6 @@ do_install() {
 	install -m 0755 server/scroll_server ${D}/www/pages/cgi-bin/scroll_server
 	install -m 0755 scroll_client/scroll_client ${D}/www/pages/cgi-bin/scroll_client
 	install -m 0755 toggle/toggle ${D}/www/pages/cgi-bin/toggle
-	install -m 0755 web/* ${D}/www/pages/
 	install -m 0755 cgi-bin/index.sh ${D}/www/pages/cgi-bin/index.sh
 
 	install -m 0755 blink/blink ${D}/home/root/altera/blink
