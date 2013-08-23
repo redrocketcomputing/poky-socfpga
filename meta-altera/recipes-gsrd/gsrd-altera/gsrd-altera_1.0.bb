@@ -34,7 +34,6 @@ do_install() {
 	install -m 0755 server/scroll_server ${D}/www/pages/cgi-bin/scroll_server
 	install -m 0755 scroll_client/scroll_client ${D}/www/pages/cgi-bin/scroll_client
 	install -m 0755 toggle/toggle ${D}/www/pages/cgi-bin/toggle
-	install -m 0755 cgi-bin/index.sh ${D}/www/pages/cgi-bin/index.sh
 
 	install -m 0755 blink/blink ${D}/home/root/altera/blink
 	install -m 0755 scroll_client/scroll_client ${D}/home/root/altera/scroll_client
