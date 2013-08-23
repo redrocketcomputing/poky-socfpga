@@ -3,9 +3,6 @@
 case "$1" in
   start)
 	modprobe gpio-altera
-	modprobe gpio-dw
-	modprobe led-class
-	modprobe leds_gpio
 	/www/pages/cgi-bin/scroll_server &
 
 	IP=`ifconfig eth0 | head -n 2 | tail -n 1 | sed s/inet\ addr:// | sed s/\ Bcast.*// | sed s/\ *//g`
