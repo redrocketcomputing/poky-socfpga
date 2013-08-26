@@ -92,7 +92,7 @@ To confirm the n is associated to which peripheral, user needs to match the
 label of the GPIO chip to the address of push button and DIP switch in device
 tree.
 e.g.
-	root@socfpga-cyclone5~:# cat /sys/class/gpio/gpiochip150
+	root@socfpga-cyclone5~:# cat /sys/class/gpio/gpiochip150/label
 	/sopc@0/bridge@0xc0000000/gpio@0x1000100C0
 
 In this reference design, DIP switch is at address 0x10080 while the push button
