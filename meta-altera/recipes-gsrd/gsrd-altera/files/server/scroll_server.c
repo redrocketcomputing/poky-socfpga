@@ -53,6 +53,13 @@ void* check_scroll_frequency_thread(void*foo)
 		scroll_interval_tmp = atoi(readbuf);
 		fclose(fp);
 
+		if (access("/sys/class/leds/fpga_led0/brightness", F_OK) != 0
+		|| access("/sys/class/leds/fpga_led1/brightness", F_OK) != 0
+		|| access("/sys/class/leds/fpga_led2/brightness", F_OK) != 0
+		|| access("/sys/class/leds/fpga_led3/brightness", F_OK) != 0) {
+			printf("Missing FPGA LEDs\n");
+		}
+
 		/* if interval is 0, client is doing a read */
 		if (scroll_interval_tmp == 0) {
 			FILE *fp;
@@ -83,7 +90,6 @@ void setLEDtrigger(int ledno, char* trigger, int size)
 	sprintf(dir, "/sys/class/leds/fpga_led%d/trigger", ledno);
 
 	if ((fp = fopen(dir, "w")) == NULL) {
-		printf("Failed to open the file %s\n", dir);
 	}
 	else {
 		if (scroll_interval > 0)
@@ -102,7 +108,6 @@ void setLEDBrightness(int ledno, int brightness)
 	sprintf(brightness_char, "%d", brightness);
 
 	if ((fp = fopen(dir, "w")) == NULL) {
-		printf("Failed to open the file %s\n", dir);
 	}
 	else {
 		if (scroll_interval > 0)
