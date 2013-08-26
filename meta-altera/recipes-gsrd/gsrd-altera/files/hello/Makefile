@@ -6,7 +6,7 @@
 C_SRC := hello.c
 CFLAGS := -g -O0 -Werror -Wall
 
-CROSS_COMPILE := arm-linux-gnueabihf-
+CROSS_COMPILE := arm-poky-linux-gnueabihf-
 CC ?= $(CROSS_COMPILE)gcc
 NM ?= $(CROSS_COMPILE)nm
 
