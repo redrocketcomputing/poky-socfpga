@@ -6,7 +6,7 @@
 C_SRC := scroll_server.c
 CFLAGS := -g -O0 -Werror -Wall -lpthread
 
-CROSS_COMPILE := arm-none-linux-gnueabi-
+CROSS_COMPILE := arm-linux-gnueabihf-
 CC ?= $(CROSS_COMPILE)gcc
 NM ?= $(CROSS_COMPILE)nm
 OD ?= $(CROSS_COMPILE)objdump
