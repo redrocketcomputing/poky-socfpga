@@ -66,7 +66,9 @@ kernel_do_compile() {
 
 do_compile_dtb() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
-        oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
+	sync
+        oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs ||
+	        oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
 }
 
 addtask compile_dtb after do_compile before do_build
