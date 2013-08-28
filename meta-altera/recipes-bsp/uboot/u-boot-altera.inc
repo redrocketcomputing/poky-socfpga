@@ -29,15 +29,11 @@ python () {
 UBOOT_ELF ?= "u-boot-${MACHINE}-${PV}-${PR}"
 UBOOT_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.bin"
 UBOOT_IMAGE_UIMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.img"
-UBOOT_IMAGE_SPL ?= "u-boot-spl-${MACHINE}-${PV}-${PR}.bin"
-UBOOT_ELF_SPL ?= "u-boot-spl-${MACHINE}-${PV}-${PR}"
 UBOOT_BINARY ?= "u-boot.bin"
 UBOOT_SYMLINK_ELF ?= "u-boot-${MACHINE}"
 UBOOT_SYMLINK ?= "u-boot-${MACHINE}.bin"
 UBOOT_SYMLINK_UIMAGE ?= "u-boot-${MACHINE}.img"
-UBOOT_SYMLINK_SPL ?= "u-boot-spl-${MACHINE}.bin"
-UBOOT_SYMLINK_ELF_SPL ?= "u-boot-spl-${MACHINE}"
-UBOOT_MAKE_TARGET ?= "all"
+UBOOT_MAKE_TARGET ?= "u-boot.img"
 INC_PR = "r0"
 
 LICENSE = "GPLv2+"
@@ -53,7 +49,6 @@ do_compile () {
 do_install () {
     install -d ${D}/boot
     install ${S}/${UBOOT_BINARY} ${D}/boot/${UBOOT_IMAGE}
-    install ${S}/spl/u-boot-spl ${D}/boot/${UBOOT_ELF_SPL}
     install ${S}/u-boot ${D}/boot/${UBOOT_ELF}
     ln -sf ${UBOOT_IMAGE} ${D}/boot/${UBOOT_BINARY}
 }
@@ -63,8 +58,6 @@ FILES_${PN} = "/boot"
 do_deploy () {
 	install ${S}/u-boot.bin ${DEPLOYDIR}/${UBOOT_IMAGE}
 	install ${S}/u-boot.img ${DEPLOYDIR}/${UBOOT_IMAGE_UIMAGE}
-	install ${S}/spl/u-boot-spl.bin ${DEPLOYDIR}/${UBOOT_IMAGE_SPL}
-	install ${S}/spl/u-boot-spl ${DEPLOYDIR}/${UBOOT_ELF_SPL}
 	install ${S}/u-boot ${DEPLOYDIR}/${UBOOT_ELF}
 
 	cd ${DEPLOYDIR}
@@ -72,10 +65,6 @@ do_deploy () {
 	ln -sf ${UBOOT_IMAGE} ${UBOOT_SYMLINK}
 	rm -f ${UBOOT_SYMLINK_UIMAGE}
 	ln -sf ${UBOOT_IMAGE_UIMAGE} ${UBOOT_SYMLINK_UIMAGE}
-	rm -f ${UBOOT_SYMLINK_SPL}
-	ln -sf ${UBOOT_IMAGE_SPL} ${UBOOT_SYMLINK_SPL}
-	rm -f ${UBOOT_SYMLINK_ELF_SPL}
-	ln -sf ${UBOOT_ELF_SPL} ${UBOOT_SYMLINK_ELF_SPL}
 	rm -f ${UBOOT_SYMLINK_ELF}
 	ln -sf ${UBOOT_ELF} ${UBOOT_SYMLINK_ELF}
 }
