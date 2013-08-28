@@ -1,6 +1,6 @@
 all:
-	make -C server
-	make -C blink
-	make -C toggle
-	make -C scroll_client
-	make -C hello
+	make -C server $(CROSS_COMPILE)
+	make -C blink $(CROSS_COMPILE)
+	make -C toggle $(CROSS_COMPILE)
+	make -C scroll_client $(CROSS_COMPILE)
+	make -C hello $(CROSS_COMPILE)
