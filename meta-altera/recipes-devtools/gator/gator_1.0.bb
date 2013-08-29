@@ -32,7 +32,7 @@ do_install() {
 	install -m 0644 ${S}/driver/gator.ko ${INIT_DIR}
         install -m 0755 ${S}/daemon/gatord ${INIT_DIR}/gatord
 	echo '#!/bin/bash' > ${INIT_DIR}/rungator.sh
-	echo '/etc/init.d/gatord &' > ${INIT_DIR}/rungator.sh
+	echo '/etc/init.d/gatord &' >> ${INIT_DIR}/rungator.sh
 	chmod a+x ${INIT_DIR}/rungator.sh
 }
 
