@@ -33,15 +33,23 @@ irqreturn_t gpio_isr(int this_irq, void *dev_id)
 static void __exit gpio_interrupt_exit (void)
 {
 	free_irq(gpio_to_irq(gpio_number), 0);
+	gpio_free(gpio_number);
 	return;
 }
 
 static int __init gpio_interrupt_init (void)
 {
 	int r;
+	int req;
 
 	if (gpio_number < 0) {
 		printk("Please specify a valid gpio_number\n");
+		return -1;
+	}
+	req = gpio_request(gpio_number, "pio interrupt");
+
+	if (req != 0) {
+		printk("Invalid gpio_number specified\n");
 		return -1;
 	}
 
