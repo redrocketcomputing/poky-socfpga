@@ -64,43 +64,6 @@ kernel_do_compile() {
         fi
 }
 
-do_compile_dtb() {
-        unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
-        export CROSS_COMPILE="${TARGET_PREFIX}"
-        export ARCH=${ARCH}
-        oe_runmake dtbs
-        sync
-        if oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs; then
-               oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
-        fi
-
-}
-
-addtask compile_dtb after do_compile before do_build
-
-KERNEL_DEVICETREE = "socfpga_vt socfpga_cyclone5 socfpga_arria5"
-
-do_deploy_dtb() {
-    install -d ${DEPLOY_DIR_IMAGE}
-    cd ${DEPLOY_DIR_IMAGE}
-    if test -n "${KERNEL_DEVICETREE}"; then
-        for DTB_FILE in ${KERNEL_DEVICETREE}; do
-	    DTB_SYMLINK_NAME="${DTB_FILE}.dtb"
-	    DEVICE_TREE_OUTPUT="${S}/arch/${ARCH}/boot/${DTB_SUBDIR}${DTB_FILE}.dtb"
-            DTB_NAME="${DTB_FILE}-${DATETIME}.dtb"
-            if [ ! -f ${DEVICE_TREE_OUTPUT} ]; then
-                echo "Warning: ${DEVICE_TREE_OUTPUT} is not available!"
-                continue
-            fi
-            install -m 0644 ${DEVICE_TREE_OUTPUT} ${DTB_NAME}
-            rm -f ${DTB_SYMLINK_NAME}
-            ln -sf ${DTB_NAME} ${DTB_SYMLINK_NAME}
-       done
-    fi
-}
-
-addtask deploy_dtb after do_compile_dtb before do_build
-
 VMLINUX_NAME ?= "vmlinux-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
 kernel_do_deploy_append() {
