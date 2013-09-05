@@ -59,6 +59,11 @@ do_compile_dtb() {
         export CROSS_COMPILE="${TARGET_PREFIX}"
         export ARCH=${ARCH}
         oe_runmake dtbs
+        sync
+        if oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs; then
+               oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
+        fi
+
 }
 
 addtask compile_dtb after do_compile before do_build
