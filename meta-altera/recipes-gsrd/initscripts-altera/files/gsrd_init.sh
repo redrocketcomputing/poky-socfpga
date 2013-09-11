@@ -2,7 +2,10 @@
 
 case "$1" in
   start)
-	modprobe gpio-altera
+	if [ "`cat /sys/class/fpga/fpga0/status`" == "user mode" ]; then
+		modprobe gpio-altera
+	fi
+
 	/www/pages/cgi-bin/scroll_server &
 
 	IP=`ifconfig eth0 | head -n 2 | tail -n 1 | sed s/inet\ addr:// | sed s/\ Bcast.*// | sed s/\ *//g`
