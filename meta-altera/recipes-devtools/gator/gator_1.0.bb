@@ -9,9 +9,8 @@ DEPENDS = "virtual/kernel"
 inherit module
 
 SRC_URI = "git://git.linaro.org/git-ro/arm/ds5/gator.git;protocol=http"
-SRCREV="06ebd1eab0a782377611efee820bb57f09692cbf"
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
-INHIBIT_PACKAGE_DEBUG_SPLIT-dev = "1"
+SRCREV="f15a1807ecf7af6dd0cac9e175ff00bf06d7c304"
+INHIBIT_PACKAGE_STRIP="1"
 
 INSANE_SKIP_${PN}-dev += " ldflags"
 INSANE_SKIP_${PN} += " ldflags"
@@ -31,7 +30,8 @@ do_install() {
 	install -d ${INIT_DIR}
 	install -m 0644 ${S}/driver/gator.ko ${INIT_DIR}
         install -m 0755 ${S}/daemon/gatord ${INIT_DIR}/gatord
-	echo -e "#!/bin/bash\n/etc/init.d/gatord & 2>/dev/null" > ${INIT_DIR}/rungator.sh
+        echo '#!/bin/bash' > ${INIT_DIR}/rungator.sh
+        echo '/etc/init.d/gatord &' >> ${INIT_DIR}/rungator.sh
 	chmod a+x ${INIT_DIR}/rungator.sh
 }
 
