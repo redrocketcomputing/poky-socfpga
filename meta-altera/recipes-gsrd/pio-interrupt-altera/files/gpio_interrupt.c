@@ -41,6 +41,7 @@ static int __init gpio_interrupt_init (void)
 {
 	int r;
 	int req;
+	int irq_number;
 
 	if (gpio_number < 0) {
 		printk("Please specify a valid gpio_number\n");
@@ -53,7 +54,7 @@ static int __init gpio_interrupt_init (void)
 		return -1;
 	}
 
-	int irq_number = gpio_to_irq(gpio_number);
+	irq_number = gpio_to_irq(gpio_number);
 
 	r = request_irq(irq_number, gpio_isr, IRQF_DISABLED, 0, 0);
 	if (r) {
