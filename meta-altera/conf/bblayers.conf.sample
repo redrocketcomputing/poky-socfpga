@@ -8,4 +8,5 @@ BBLAYERS = " \
   ##COREBASE##/meta-yocto \
   ##COREBASE##/meta-yocto-bsp \
   ##COREBASE##/meta-altera \
+  ##COREBASE##/meta-linaro \
   "
