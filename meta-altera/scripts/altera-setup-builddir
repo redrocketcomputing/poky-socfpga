@@ -99,11 +99,11 @@ then
     # The EXTERNAL_TOOLCHAIN variable doesn't exist, this poky is from rocketboards.org
     echo "Please enter the linaro toolchain installation path. Linaro toolchain version 4.7-2012.11-20121123 is required."
     echo "If the toolchain folder is empty, linaro 4.7-2012.11-20121123 will be downloaded and installed to the path"
-    echo "Hit enter to use default directory at ./linaro-toolchain"
+    echo "Hit enter to use default directory at $BUILDDIR/linaro-toolchain"
     read TOOLCHAIN_FOLDER
 
     if [ "x$TOOLCHAIN_FOLDER" == "x" ]; then
-        TOOLCHAIN_FOLDER="./linaro-toolchain"
+        TOOLCHAIN_FOLDER="$BUILDDIR/linaro-toolchain"
     fi
 
     if [ -e "$TOOLCHAIN_FOLDER" ]; then
