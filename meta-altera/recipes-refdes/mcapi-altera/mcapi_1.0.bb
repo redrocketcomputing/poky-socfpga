@@ -1,20 +1,20 @@
 DESCRIPTION = "Altera MCAPI build"
-PACKAGES = "${PN}"
-PROVIDES = "mcapi-staticdev mcapi-dbg mcapi-dev"
-RPROVIDES = "mcapi-dev"
-
-inherit module-base
+PACKAGES = "${PN} ${PN}-dev ${PN}-staticdev ${PN}-dbg ${PN}"
+PROVIDES = "mcapi-staticdev mcapi-dbg"
+RPROVIDES = "mcapi"
 
 DEPENDS += "virtual/kernel"
 RDEPENDS += "kernel-image update-modules"
+
+inherit module
 
 SECTION = "gsrd"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD;md5=3775480a712fc46a69647678acb234cb"
 PR = "r0"
 FILES_${PN} = "/usr/bin/* /lib/modules/*"
-FILES_${PN}-staticdev = "/usr/include/* /usr/lib/*"
-FILES_${PN}-dbg = "/usr/src/* /usr/bin/.debug/*"
+FILES_${PN}-staticdev = "/usr/include /usr/lib"
+FILES_${PN}-dbg = "/usr /usr/lib /usr/include/mcapi/mcapi.h /usr/include/mcapi/openmcapi.h /usr/include/mcapi/openmcapi_cfg.h /usr/src/debug /usr/bin/.debug"
 
 SRCREV = "${AUTOREV}"
 
