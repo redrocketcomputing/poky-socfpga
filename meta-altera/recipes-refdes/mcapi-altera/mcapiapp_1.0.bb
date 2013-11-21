@@ -17,7 +17,7 @@ do_configure() {
 }
 
 do_compile() {
-	${CC} app_mcapi_demo.c linux_init.c ${LDFLAGS} -L{STAGING_LIBDIR} -I{STAGING_INCDIR} -lopenmcapi -o mcapi_test
+	${CC} -lrt -lpthread app_mcapi_demo.c linux_init.c ${LDFLAGS} -L${STAGING_LIBDIR} -I${STAGING_INCDIR}/mcapi -lopenmcapi -o mcapi_test
 }
 
 do_install() {
