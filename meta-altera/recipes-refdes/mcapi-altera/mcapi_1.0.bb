@@ -1,5 +1,5 @@
 DESCRIPTION = "Altera MCAPI build"
-PACKAGES = "${PN} ${PN}-dev ${PN}-staticdev ${PN}-dbg ${PN}"
+PACKAGES = "${PN} ${PN}-dev ${PN}-staticdev ${PN}-dbg"
 PROVIDES = "mcapi-staticdev mcapi-dbg"
 RPROVIDES = "mcapi"
 
