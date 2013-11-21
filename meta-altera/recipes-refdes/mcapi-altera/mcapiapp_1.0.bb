@@ -21,7 +21,7 @@ do_compile() {
 }
 
 do_install() {
-	install -d {D}/usr/local/bin
+	install -d ${D}/usr/local/bin
 	install -m 0755 mcapi_test ${D}/usr/local/bin/mcapi_test
 }
 
