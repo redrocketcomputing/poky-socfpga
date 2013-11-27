@@ -1,5 +1,7 @@
 PR = "r1"
-SRC_URI = "git://git.rocketboards.org/linux-socfpga.git;protocol=http;branch=socfpga-${PV}-rel"
+SRC_URI = "git://git.rocketboards.org/linux-socfpga.git;protocol=http;branch=socfpga-${PV}-rel file://0001-kernel-config.patch"
+
+FILES_${PN} += 0001-kernel-config.patch
 
 SRCREV_pn-${PN} = "${AUTOREV}"
 
