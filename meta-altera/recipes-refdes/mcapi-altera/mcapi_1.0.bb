@@ -18,7 +18,7 @@ FILES_${PN}-dbg = "/usr /usr/lib /usr/src/debug /usr/bin/.debug"
 
 SRCREV = "${AUTOREV}"
 
-SRC_URI = "git://gitolite@pg-git/openmcapi.git;protocol=ssh;branch=socfpga_devbranch"
+SRC_URI = "git://gitolite@pg-git/openmcapi.git;protocol=ssh;branch=socfpga-1.0"
 
 S = "${WORKDIR}"
 
