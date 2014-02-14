@@ -16,7 +16,7 @@ case "$1" in
 	printf '\e[2J' > /dev/ttyLCD0
 	printf "$IP" > /dev/ttyLCD0
 	printf "\n" > /dev/ttyLCD0
-	printf Hello\ Tim! > /dev/ttyLCD0
+	printf AMP\ demo > /dev/ttyLCD0
 	;;
   stop)
 	ID=`ps | grep scroll_server | awk '{print $1;}'`
