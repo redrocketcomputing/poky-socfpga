@@ -9,7 +9,8 @@ FILES_${PN} = "/usr/local/bin/*"
 SRCREV = "${AUTOREV}"
 
 SRC_URI = "file://app_mcapi_demo.c \
-	   file://linux_init.c"
+	   file://linux_init.c \
+           file://mcapi_demo.h"
 
 S = "${WORKDIR}"
 
