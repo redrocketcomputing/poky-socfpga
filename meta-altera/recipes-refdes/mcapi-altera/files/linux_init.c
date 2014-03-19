@@ -41,8 +41,8 @@ static void usage(const char *name)
 {
 	printf("Usage: %s [options] <local node id> <remote node id>\n"
 			"Options:\n"
-			"  -l, --loop      send and receive messages until killed.\n",
-			"  -h, --help      displays help and exit.\n"
+			"  -l, --loop      send and receive messages until killed.\n"
+			"  -h, --help      displays help and exit.\n",
 			name);
 }
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	while (1) {
 		static struct option long_options[] = {
 			{"loop", 0, 0, 'l'},
-			{"help", 0, 0 "h"},
+			{"help", 0, 0, 'h'},
 			{NULL, 0, 0, 0},
 		};
 		int option_index = 0;
