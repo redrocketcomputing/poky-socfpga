@@ -8,7 +8,9 @@ inherit deploy
 PARALLEL_MAKE=""
 PACKAGES=""
 
-SRC_URI = "git://git.rocketboards.org/u-boot-socfpga.git;protocol=http;branch=socfpga_v${PV}-rel"
+UBOOT_REPO ?= "git://git.rocketboards.org/u-boot-socfpga.git"
+UBOOT_PROT ?= "http"
+SRC_URI = "${UBOOT_REPO};protocol=${UBOOT_PROT};branch=socfpga_v${PV}-rel14.0"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;startline=26;md5=1707d6db1d42237583f50183a5651ecb"
 SRCREV_pn-${PN} = "${AUTOREV}"
 
