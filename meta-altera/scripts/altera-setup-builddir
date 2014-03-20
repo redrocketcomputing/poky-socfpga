@@ -18,6 +18,52 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+GCC_VERSION=4.7
+GCC_RELEASE_YYYY_MM=2013.03
+GCC_RELEASE=${GCC_RELEASE_YYYY_MM}-20130313
+GCC_BASENAME=gcc-linaro-arm-linux-gnueabihf-${GCC_VERSION}-${GCC_RELEASE}_linux
+GCC_ARCHIVE=${GCC_BASENAME}.tar.bz2
+
+function download_toolchain() {
+	wget https://launchpad.net/linaro-toolchain-binaries/trunk/${GCC_RELEASE_YYYY_MM}/+download/$GCC_ARCHIVE
+	DOWNLOAD_STATUS=$?
+
+	if [ $DOWNLOAD_STATUS -ne 0 ]; then
+		echo "Failed to download toolchain"
+	fi
+
+	case "$DOWNLOAD_STATUS" in
+	"1")
+		echo "General failure when download toolchain"
+		;;
+	"2")
+		echo "Parse error when downloading toolchain"
+		;;
+	"3")
+		echo "File I/O error when downloading toolchain"
+		;;
+	"4")
+		echo "Network failure when downloading toolchain"
+		;;
+	"5")
+		echo "SSL verfication failure when downloading toolchain"
+		;;
+	"6")
+		echo "Username/password authentication failure when downloading toolchain"
+		;;
+	"7")
+		echo "Protocol error when downloading toolchain"
+		;;
+	"8")
+		echo "Server issued an error response when downloading toolchain"
+		;;
+	esac
+
+	if [ $DOWNLOAD_STATUS -ne 0 ]; then
+		exit -1
+	fi
+}
+
 if [ -z "$BUILDDIR" ]; then
     echo >&2 "Error: The build directory (BUILDDIR) must be set!"
     exit 1
@@ -93,12 +139,12 @@ unset OECORELOCALCONF
 unset OECORELAYERCONF
 
 # Now try to check for the external toolchain
-grep EXTERNAL_TOOLCHAIN $BUILDDIR/conf/site.conf > /dev/null
+grep EXTERNAL_TOOLCHAIN $BUILDDIR/conf/site.conf > /dev/null 
 if [ $? != 0 ]
 then
     # The EXTERNAL_TOOLCHAIN variable doesn't exist, this poky is from rocketboards.org
-    echo "Please enter the linaro toolchain installation path. Linaro toolchain version 4.7-2012.11-20121123 is required."
-    echo "If the toolchain folder is empty, linaro 4.7-2012.11-20121123 will be downloaded and installed to the path"
+    echo "Please enter the linaro toolchain installation path. Linaro toolchain version $GCC_VERSION-$GCC_RELEASE is required."
+    echo "If the toolchain folder is empty, linaro $GCC_VERSION-$GCC_RELEASE will be downloaded and installed to the path"
     echo "Hit enter to use default directory at $BUILDDIR/linaro-toolchain"
     read TOOLCHAIN_FOLDER
 
@@ -106,30 +152,33 @@ then
         TOOLCHAIN_FOLDER="$BUILDDIR/linaro-toolchain"
     fi
 
-    if [ -e "$TOOLCHAIN_FOLDER" ]; then
+    if [ -d "$TOOLCHAIN_FOLDER" ]; then
         echo "Toolchain folder exists, proceeding without downloading toolchain"
         echo "Checking toolchain version"
-        "$TOOLCHAIN_FOLDER"/bin/arm-linux-gnueabihf-gcc --version | grep 2012.11-20121123 > /dev/null
-        if [ $? != 0 ]; then
-            echo "Toolchain version not supported. Please rerun \"source altera-init\" and specify a correct Linaro toolchain"
-            exit -1
-        else
-            echo "Toolchain version match, proceeding"
-            echo "TCLIBC = \"external-linaro-toolchain\"" >> $BUILDDIR/conf/site.conf
-            echo "TCMODE = \"external-linaro\"" >> $BUILDDIR/conf/site.conf
-            echo "EXTERNAL_TOOLCHAIN = \"$TOOLCHAIN_FOLDER\"" >> $BUILDDIR/conf/site.conf
+	if [ -x $TOOLCHAIN_FOLDER/bin/arm-linux-gnueabihf-gcc ]; then
+	        "$TOOLCHAIN_FOLDER"/bin/arm-linux-gnueabihf-gcc --version | grep $GCC_VERSION-$GCC_RELEASE > /dev/null 
+		if [ $? -ne 0 ]; then
+			echo "Toolchain version not supported. Please rerun \"source altera-init\" and specify a correct Linaro toolchain"
+			exit -1
+	        else
+			echo "Toolchain version match, proceeding"
+			echo "TCLIBC = \"external-linaro-toolchain\"" >> $BUILDDIR/conf/site.conf
+			echo "TCMODE = \"external-linaro\"" >> $BUILDDIR/conf/site.conf
+			echo "EXTERNAL_TOOLCHAIN = \"$TOOLCHAIN_FOLDER\"" >> $BUILDDIR/conf/site.conf
+		fi
+	else
+		echo "Error: No toolchain binary found in the specified path"
+		exit -1
         fi
     else
-        set -e
         mkdir -p "$TOOLCHAIN_FOLDER"
         pushd "$TOOLCHAIN_FOLDER"
-        echo "Downloading linaro 4.7-2012.11-20121123 toolchain"
-        wget https://launchpad.net/linaro-toolchain-binaries/trunk/2012.11/+download/gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux.tar.bz2
-        bunzip2 gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux.tar.bz2
-        tar xf gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux.tar
-        rm gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux.tar
-        mv gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux/* .
-        rmdir gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux
+        echo "Downloading linaro $GCC_VERSION-$GCC_RELEASE toolchain"
+	download_toolchain
+        tar xjf $GCC_ARCHIVE || (echo "Error: Unable to extract downloaded Linaro toolchain archive" && rm -rf $GCC_BASENAME && exit)
+	rm $GCC_ARCHIVE || (echo "Error: Unable to remove Linaro toolchain archive")
+        mv $GCC_BASENAME/* . || (echo "Error: Unable to move Linaro toolchain to requested directory" && exit)
+        rmdir $GCC_BASENAME || (echo "Error: Unable to temporary Linaro toolchain directory")
         popd
         echo "TCLIBC = \"external-linaro-toolchain\"" >> $BUILDDIR/conf/site.conf
         echo "TCMODE = \"external-linaro\"" >> $BUILDDIR/conf/site.conf
