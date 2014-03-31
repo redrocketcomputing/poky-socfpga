@@ -16,9 +16,12 @@ FILES_${PN} = "/usr/bin/* /lib/modules/*"
 FILES_${PN}-staticdev = "/usr/include/* /usr/lib"
 FILES_${PN}-dbg = "/usr /usr/lib /usr/src/debug /usr/bin/.debug"
 
+OPENMCAPI_REPO ?= "git://git.rocketboards.org/openmcapi.git"
+OPENMCAPI_PROT ?= "http"
+
 SRCREV = "${AUTOREV}"
 
-SRC_URI = "git://gitolite@pg-git/openmcapi.git;protocol=ssh;branch=socfpga-1.0"
+SRC_URI = "${OPENMCAPI_REPO};protocol=${OPENMCAPI_PROT};branch=socfpga-1.0"
 
 S = "${WORKDIR}"
 
