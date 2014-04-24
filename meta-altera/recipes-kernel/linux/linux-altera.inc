@@ -1,7 +1,8 @@
 PR = "r1"
 KERNEL_REPO ?= "git://git.rocketboards.org/linux-socfpga.git"
 KERNEL_PROT ?= "http"
-SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=socfpga-${PV}-rel14.0"
+KERNEL_TAG ?= "ACDS14.0_REL_GSRD_PR"
+SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};tag=${KERNEL_TAG}"
 SRCREV_pn-${PN} = "${AUTOREV}"
 
 inherit kernel
